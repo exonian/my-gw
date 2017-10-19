@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "My GW",
-  "description": "Redirects you to your preferred regional GW site automatically",
+  "description": "Remembers your preferred regional GW site and automatically redirects to it",
   "version": "0.1",
 
   "background": {
