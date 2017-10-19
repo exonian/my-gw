@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "My GW",
+  "description": "Redirects you to your preferred regional GW site automatically",
+  "version": "0.1",
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.games-workshop.com/*"],
+      "js": ["jquery-3.2.1.min.js", "contentscript.js"]
+    }
+  ],
+
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "*://www.games-workshop.com/"]
+}
