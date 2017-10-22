@@ -18,3 +18,11 @@ $("body").on("click", "a[href*='product.endDate'].read-more, a[href*='searchResu
     }
     chrome.runtime.sendMessage({gwViewAll: viewAll}, function() {location.reload()});
 });
+
+$(document).on("DOMNodeInserted", "div.instagram-modal .modal", function(e) {
+    var $authorName = $(this).find('.test-author-name');
+    if ($authorName.length && !($authorName.find('a')).length) {
+        var username = $(this).find('.test-author-img').attr('alt');
+        $authorName.html("<a href='https://instagram.com/" + username + "' target='_blank'>"+ $authorName.html() + " 🔗</a>");
+    }
+});
