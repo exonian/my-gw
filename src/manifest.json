@@ -3,7 +3,7 @@
 
   "name": "My Games Workshop Webstore",
   "description": "Remembers your preferred regional GW site and automatically redirects to it",
-  "version": "0.3",
+  "version": "0.3.1",
 
   "icons": {
     "16": "icon/icon16.png",

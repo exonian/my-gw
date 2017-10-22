@@ -7,7 +7,7 @@ $("body").on("click", "a[href*='" + locale_link_identifier + "']", function(e) {
     chrome.runtime.sendMessage({gwLang: language_code}, function() {location.reload()});
 });
 
-$("body").on("click", "a[href*='product.endDate'].read-more", function(e) {
+$("body").on("click", "a[href*='product.endDate'].read-more, a[href*='searchResults'].read-more", function(e) {
     e.preventDefault();
     if (this.href.endsWith('view=all')) {
         // currently viewing all, so turning it off

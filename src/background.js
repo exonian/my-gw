@@ -16,7 +16,7 @@ function checkAndRedirect(details) {
     if (!details.url.match(my_language_regex) && details.url.match(any_language_regex)) {
         return {redirectUrl: details.url.replace(any_language_regex, my_language_string)};
     };
-    if (details.url.includes("product.endDate")) {
+    if (details.url.includes("product.endDate") || details.url.includes("searchResults")) {
         if (view_all && !details.url.endsWith(view_all_query_string)) {
             return {redirectUrl: details.url + view_all_query_string};
         }
