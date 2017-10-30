@@ -1,8 +1,16 @@
 var locale_link_identifier = "countrySelectorStoreLocaleId=";
+var locale_class_prefix = "test-select-locale-";
 
 $("body").on("click", "a[href*='" + locale_link_identifier + "']", function(e) {
-    var parts = this.href.split(locale_link_identifier)[1].split('-');
-    var language_code = parts[0] + '-' + parts[1].toUpperCase();
+    var classes = this.className.split(/\s+/);
+    var language_code;
+    $.each(classes, function(i, class_name) {
+        if (class_name.startsWith(locale_class_prefix)) {
+            var parts = language_code = class_name.split(locale_class_prefix)[1].split('-');
+            language_code = parts[0] + '-' + parts[1].toUpperCase();
+            return false;
+        }
+    });
     e.preventDefault();
     chrome.runtime.sendMessage({gwLang: language_code}, function() {location.reload()});
 });
