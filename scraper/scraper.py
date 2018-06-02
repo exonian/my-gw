@@ -5,15 +5,21 @@ import requests
 from bs4 import BeautifulSoup
 
 
-OUTPUT_FILE_PATH = 'categories.json'
-PRODUCT_RANGES = {'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000']}
-REGIONS = ['en-GB']
+class Breadcrumbs(object):
+    output_file_path = 'breadcrumbs.json'
+    product_ranges = {'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000']}
+    regions = ['en-GB']
 
+    def __init__(self, *args, **kwargs):
+        self.browse_pages = []
 
-if __name__ == '__main__':
-    for website, product_ranges in PRODUCT_RANGES.items():
-        product_range = product_ranges[0]
-        region = REGIONS[0]
+    def assemble(self):
+        for region in self.regions:
+            for website, product_ranges in self.product_ranges.items():
+                for product_range in product_ranges:
+                    self.get_browse_pages_for_product_range(product_range, website, region)
+
+    def get_browse_pages_for_product_range(self, product_range, website, region):
         params = {'website': website, 'product_range': product_range, 'region': region}
         url = 'https://{website}/{region}/{product_range}'.format(**params)
         print('Fetching {}'.format(url))
@@ -29,4 +35,10 @@ if __name__ == '__main__':
             for category in data['contents'][0]['secondaryContent'][0]['contents'][0]['navigation']:
                 for entry in category['refinements']:
                     browse_pages.append((entry['properties']['name'], entry['navigationState']))
+            self.browse_pages.extend(browse_pages)
             print('  Found {} browse pages'.format(len(browse_pages)))
+
+
+if __name__ == '__main__':
+    breadcrumbs = Breadcrumbs()
+    breadcrumbs.assemble()
