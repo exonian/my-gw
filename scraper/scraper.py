@@ -10,6 +10,7 @@ class Breadcrumbs(object):
     output_file_path = 'breadcrumbs.json'
     product_ranges = {'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000']}
     regions = ['en-GB']
+    banned_category_names = ['Language']
     banned_entry_names = ['Pre-orders', 'New releases', 'Last chance to buy']
 
     def __init__(self, *args, **kwargs):
@@ -43,11 +44,12 @@ class Breadcrumbs(object):
             data = json.loads(script_json)
             browse_pages = []
             for category in data['contents'][0]['secondaryContent'][0]['contents'][0]['navigation']:
-                for entry in category['refinements']:
-                    name = entry['properties']['name']
-                    browse_url = '{url}{nav_state}&view=all'.format(url=url, nav_state=entry['navigationState'])
-                    if name not in self.banned_entry_names:
-                        browse_pages.append((name, browse_url))
+                if category['name'] not in self.banned_category_names:
+                    for entry in category['refinements']:
+                        name = entry['properties']['name']
+                        browse_url = '{url}{nav_state}&view=all'.format(url=url, nav_state=entry['navigationState'])
+                        if name not in self.banned_entry_names:
+                            browse_pages.append((name, browse_url))
 
             self.browse_pages.extend(browse_pages)
             print('  Found {} browse pages'.format(len(browse_pages)))
