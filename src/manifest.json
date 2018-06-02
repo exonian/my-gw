@@ -3,7 +3,7 @@
 
   "name": "My Games Workshop Webstore",
   "description": "Remembers your browsing preferences for the GW and FW sites, to make up for their UX",
-  "version": "0.6.0",
+  "version": "0.7.0",
 
   "icons": {
     "16": "icon/icon16.png",
