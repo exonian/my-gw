@@ -37,5 +37,15 @@ $(function() {
 });
 
 $(function() {
-    console.log(breadcrumbs[window.location.href]);
+    var page_breadcrumbs = breadcrumbs[window.location.href];
+    if (page_breadcrumbs != undefined) {
+        var $main = $("#main");
+        var $nav = $('<div style="text-align: center; padding-top: 15px;"></div>')
+        page_breadcrumbs.forEach(function(e) {
+            var $nav_item = $("<a>" + e[0] + "</a>");
+            $nav_item.attr("href", e[1]).addClass("new-button");
+            $nav.append($nav_item);
+        });
+        $main.prepend($nav);
+    }
 });
