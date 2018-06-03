@@ -35,3 +35,7 @@ $(function() {
         };
     });
 });
+
+$(function() {
+    console.log(breadcrumbs[window.location.href]);
+});

@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.forgeworld.co.uk/*", "*://*.games-workshop.com/*"],
-      "js": ["jquery-3.2.1.min.js", "contentscript.js"]
+      "js": ["jquery-3.2.1.min.js", "contentscript.js", "breadcrumbs.json"]
     }
   ],
 
