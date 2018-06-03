@@ -1,5 +1,7 @@
 import json
+import os
 import re
+import time
 from collections import defaultdict
 
 import requests
@@ -7,7 +9,7 @@ from bs4 import BeautifulSoup
 
 
 class Breadcrumbs(object):
-    output_file_path = 'breadcrumbs.json'
+    output_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadcrumbs.json')
     product_ranges = {'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000']}
     regions = ['en-GB']
     banned_category_names = ['Language']
@@ -24,10 +26,22 @@ class Breadcrumbs(object):
                     self.get_browse_pages_for_product_range(product_range, website, region)
         print('')
         print('Found {} browse pages in total'.format(len(self.browse_pages)))
+        print('')
 
-        for browse_page in self.browse_pages:
-            pass
-            # TODO add browse_page to the list for each product page linked to from it
+        for name, url in self.browse_pages:
+            print('Fetching "{name}" {url}'.format(name=name, url=url))
+            response = requests.get(url)
+            if response.status_code == 200:
+                print('  Parsing the browse page for product page links')
+                link_partial_urls = re.findall('"product.seoUrl"\: \["([\w-]+)"\]', response.content.decode('utf-8'))
+                for partial_url in link_partial_urls:
+                    full_url = 'https://{website}/{region}/{partial_url}'.format(website=website, region=region, partial_url=partial_url)
+                    self.product_pages[full_url].append((name, url))
+            time.sleep(0.5)
+        print('')
+        print('Writing data to {}'.format(self.output_file_path))
+        with open(self.output_file_path, 'w') as f:
+            f.write(json.dumps(self.product_pages))
 
 
     def get_browse_pages_for_product_range(self, product_range, website, region):
