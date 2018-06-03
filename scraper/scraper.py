@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 
 class Breadcrumbs(object):
-    output_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadcrumbs.json')
+    output_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'breadcrumbs.json')
     product_ranges = {
         'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000', 'The-Hobbit', 'Black-Library', 'Painting-Modelling', 'Boxed-Games'],
         'www.forgeworld.co.uk': ['Warhammer-40-000', 'The-Horus-Heresy', 'Warhammer-Age-of-Sigmar', 'The-Hobbit-Trilogy', 'More-Games', 'Modelling'],
