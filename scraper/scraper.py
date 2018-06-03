@@ -33,7 +33,7 @@ class Breadcrumbs(object):
 
         for i, browse_page in enumerate(self.browse_pages):
             name, url = browse_page
-            print('{i} of {total}'.format(i=i, total=len(self.browse_pages)))
+            print('{i} of {total}'.format(i=i + 1, total=len(self.browse_pages)))
             print('Fetching "{name}" {url}'.format(name=name, url=url))
             response = requests.get(url)
             if response.status_code == 200:
