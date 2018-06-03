@@ -32,7 +32,7 @@ class Breadcrumbs(object):
         print('')
 
         for i, browse_page in enumerate(self.browse_pages):
-            name, url = browse_page
+            name, url, website = browse_page
             print('{i} of {total}'.format(i=i + 1, total=len(self.browse_pages)))
             print('Fetching "{name}" {url}'.format(name=name, url=url))
             response = requests.get(url)
@@ -46,7 +46,7 @@ class Breadcrumbs(object):
         print('')
         print('Writing data to {}'.format(self.output_file_path))
         with open(self.output_file_path, 'w') as f:
-            f.write(json.dumps(self.product_pages))
+            f.write('breadcrumbs = ' + json.dumps(self.product_pages))
 
 
     def get_browse_pages_for_product_range(self, product_range, website, region):
@@ -68,7 +68,7 @@ class Breadcrumbs(object):
                         name = entry['properties']['name']
                         browse_url = '{url}{nav_state}&view=all'.format(url=url, nav_state=entry['navigationState'])
                         if name not in self.banned_entry_names:
-                            browse_pages.append((name, browse_url))
+                            browse_pages.append((name, browse_url, website))
 
             self.browse_pages.extend(browse_pages)
             print('  Found {} browse pages'.format(len(browse_pages)))
