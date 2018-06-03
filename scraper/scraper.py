@@ -28,7 +28,9 @@ class Breadcrumbs(object):
         print('Found {} browse pages in total'.format(len(self.browse_pages)))
         print('')
 
-        for name, url in self.browse_pages:
+        for i, browse_page in enumerate(self.browse_pages):
+            name, url = browse_page
+            print('{i} of {total}'.format(i=i, total=len(self.browse_pages)))
             print('Fetching "{name}" {url}'.format(name=name, url=url))
             response = requests.get(url)
             if response.status_code == 200:
@@ -36,7 +38,7 @@ class Breadcrumbs(object):
                 link_partial_urls = re.findall('"product.seoUrl"\: \["([\w-]+)"\]', response.content.decode('utf-8'))
                 for partial_url in link_partial_urls:
                     full_url = 'https://{website}/{region}/{partial_url}'.format(website=website, region=region, partial_url=partial_url)
-                    self.product_pages[full_url].append((name, url))
+                    self.product_pages[full_url].append(browse_page)
             time.sleep(0.5)
         print('')
         print('Writing data to {}'.format(self.output_file_path))
