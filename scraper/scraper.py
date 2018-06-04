@@ -15,8 +15,8 @@ class Breadcrumbs(object):
         'www.forgeworld.co.uk': ['Warhammer-40-000', 'The-Horus-Heresy', 'Warhammer-Age-of-Sigmar', 'The-Hobbit-Trilogy', 'More-Games', 'Modelling'],
     }
     regions = ['en-GB']
-    banned_category_names = ['Language']
-    banned_entry_names = ['Pre-orders', 'New releases', 'Last chance to buy']
+    banned_category_names = ['New & Exclusive', "What's New", 'Language']
+    banned_entry_names = ['Last Chance to Buy', 'Bestsellers']
 
     def __init__(self, *args, **kwargs):
         self.browse_pages = []
