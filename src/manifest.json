@@ -18,7 +18,15 @@
   "content_scripts": [
     {
       "matches": ["*://*.forgeworld.co.uk/*", "*://*.games-workshop.com/*"],
-      "js": ["jquery-3.2.1.min.js", "contentscript.js", "breadcrumbs.json"]
+      "js": ["jquery-3.2.1.min.js", "contentscript.js"]
+    },
+    {
+      "matches": ["*://*.forgeworld.co.uk/en-GB/*"],
+      "js": ["www.forgeworld.co.uk-en-GB-breadcrumbs.json"]
+    },
+    {
+      "matches": ["*://*.games-workshop.com/en-GB/*"],
+      "js": ["www.games-workshop.com-en-GB-breadcrumbs.json"]
     }
   ],
 

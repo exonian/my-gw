@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 
 class Breadcrumbs(object):
-    output_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'breadcrumbs.json')
+    output_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src')
     product_ranges = {
         'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000', 'The-Hobbit', 'Black-Library', 'Painting-Modelling', 'Boxed-Games'],
         'www.forgeworld.co.uk': ['Warhammer-40-000', 'The-Horus-Heresy', 'Warhammer-Age-of-Sigmar', 'The-Hobbit-Trilogy', 'More-Games', 'Modelling'],
@@ -18,44 +18,44 @@ class Breadcrumbs(object):
     banned_category_names = ['New & Exclusive', "What's New", 'Language']
     banned_entry_names = ['Last Chance to Buy', 'Bestsellers']
 
-    def __init__(self, *args, **kwargs):
-        self.browse_pages = []
-        self.product_pages = defaultdict(list)
-
     def assemble(self):
         for region in self.regions:
             for website, product_ranges in self.product_ranges.items():
+                output_file_path = os.path.join(self.output_dir_path, '{}-{}-breadcrumbs.json'.format(website, region))
+                print('https://{website}/{region}/'.format(website=website, region=region))
+                browse_pages = []
                 for product_range in product_ranges:
-                    self.get_browse_pages_for_product_range(product_range, website, region)
-        print('')
-        print('Found {} browse pages in total'.format(len(self.browse_pages)))
-        print('')
+                    browse_pages.extend(self.get_browse_pages_for_product_range(product_range, website, region))
+                print('')
+                print('  Found {} browse pages in total'.format(len(browse_pages)))
+                print('')
 
-        for i, browse_page in enumerate(self.browse_pages):
-            name, url, website = browse_page
-            print('{i} of {total}'.format(i=i + 1, total=len(self.browse_pages)))
-            print('Fetching "{name}" {url}'.format(name=name, url=url))
-            response = requests.get(url)
-            if response.status_code == 200:
-                print('  Parsing the browse page for product page links')
-                link_partial_urls = re.findall('"product.seoUrl"\: \["([\w-]+)"\]', response.content.decode('utf-8'))
-                for partial_url in link_partial_urls:
-                    full_url = 'https://{website}/{region}/{partial_url}'.format(website=website, region=region, partial_url=partial_url)
-                    self.product_pages[full_url].append(browse_page)
-            time.sleep(0.5)
-        print('')
-        print('Writing data to {}'.format(self.output_file_path))
-        with open(self.output_file_path, 'w') as f:
-            f.write('breadcrumbs = ' + json.dumps(self.product_pages))
+                product_pages = defaultdict(list)
+                for i, browse_page in enumerate(browse_pages):
+                    name, url = browse_page
+                    print('  {i} of {total}'.format(i=i + 1, total=len(browse_pages)))
+                    print('  Fetching "{name}" {url}'.format(name=name, url=url))
+                    response = requests.get(url)
+                    if response.status_code == 200:
+                        print('    Parsing the browse page for product page links')
+                        link_partial_urls = re.findall('"product.seoUrl"\: \["([\w-]+)"\]', response.content.decode('utf-8'))
+                        for partial_url in link_partial_urls:
+                            full_url = 'https://{website}/{region}/{partial_url}'.format(website=website, region=region, partial_url=partial_url)
+                            product_pages[full_url].append(browse_page)
+                    time.sleep(0.5)
+                print('')
+                print('  Writing data to {}'.format(output_file_path))
+                with open(output_file_path, 'w') as f:
+                    f.write('breadcrumbs = ' + json.dumps(product_pages))
 
 
     def get_browse_pages_for_product_range(self, product_range, website, region):
         params = {'website': website, 'product_range': product_range, 'region': region}
         url = 'https://{website}/{region}/{product_range}'.format(**params)
-        print('Fetching {}'.format(url))
+        print('  Fetching {}'.format(url))
         response = requests.get(url)
         if response.status_code == 200:
-            print('  Parsing the nav for browse pages')
+            print('    Parsing the nav for browse pages')
             soup = BeautifulSoup(response.content, 'html.parser')
             start_phrase = "gw.cartridgeManager.renderPage("
             script_source = soup.find(text=re.compile(start_phrase.replace("(", "\(")))
@@ -68,10 +68,9 @@ class Breadcrumbs(object):
                         name = entry['properties']['name']
                         browse_url = '{url}{nav_state}&view=all'.format(url=url, nav_state=entry['navigationState'])
                         if name not in self.banned_entry_names:
-                            browse_pages.append((name, browse_url, website))
-
-            self.browse_pages.extend(browse_pages)
-            print('  Found {} browse pages'.format(len(browse_pages)))
+                            browse_pages.append((name, browse_url))
+            print('    Found {} browse pages'.format(len(browse_pages)))
+            return browse_pages
 
 
 if __name__ == '__main__':
