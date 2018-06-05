@@ -15,9 +15,21 @@ class Breadcrumbs(object):
             'Warhammer',
             'Warhammer-40-000',
             'The-Hobbit',
+            'Le-Hobbit',
+            'Der-Hobbit',
+            'El-Hobbit',
+            'Lo-Hobbit',
             'Black-Library',
             'Painting-Modelling',
+            'Peinture-Modélisme',
+            'Malen-Basteln',
+            'Pintura-Y-Modelismo',
+            'Pittura-E-Modellismo',
             'Boxed-Games',
+            'Boites-de-Jeu',
+            'Spielsets',
+            'Juegos-en-caja',
+            'Giochi-in-scatola',
         ],
         'www.forgeworld.co.uk': [
             'Warhammer-40-000',
@@ -29,7 +41,10 @@ class Breadcrumbs(object):
         ],
     }
     regions = [
-        # 'en-AU',
+        'en-AU',
+        'en-JP',
+        'en-GB',
+        'en-US',
         # 'en-BE',
         # 'en-CA',
         # 'en-DK',
@@ -39,7 +54,6 @@ class Breadcrumbs(object):
         # 'en-FR',
         # 'en-IE',
         # 'en-IT',
-        # 'en-JP',
         # 'en-NL',
         # 'en-NZ',
         # 'en-NO',
@@ -47,8 +61,6 @@ class Breadcrumbs(object):
         # 'en-EU',
         # 'en-WW',
         # 'en-SE',
-        'en-GB',
-        # 'en-US',
         # 'en-AT',
         # 'fr-BE',
         # 'fr-CA',
@@ -58,8 +70,15 @@ class Breadcrumbs(object):
         # 'it-IT',
         # 'de-AT',
     ]
-    banned_category_names = ['New & Exclusive', "What's New", 'Language']
-    banned_entry_names = ['Last Chance to Buy', 'Bestsellers']
+    banned_category_names = [
+        'New & Exclusive', 'Nouveau et en Exclusivité', 'Neu & Exklusiv', 'Nuevo y Exclusivo', 'Novità ed Esclusive',
+        'Language', 'La langue', 'Sprache', 'Idioma', 'Lingua',
+        "What's New",  # FW-only
+    ]
+    banned_entry_names = [
+        'Bestsellers', 'Meilleures ventes', 'Bestseller', 'Los más vendidos', 'I più venduti',
+        'Last Chance to Buy',  # only not in New & Exclusive on FW
+    ]
 
     def assemble(self):
         for region in self.regions:
