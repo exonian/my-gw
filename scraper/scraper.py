@@ -75,17 +75,16 @@ class Breadcrumbs(object):
 
                 product_pages = defaultdict(list)
                 for i, browse_page in enumerate(browse_pages):
-                    name, url = browse_page
+                    name, full_browse_url, partial_browse_url = browse_page
                     print('  {i} of {total}'.format(i=i + 1, total=len(browse_pages)))
-                    print('  Fetching "{name}" {url}'.format(name=name, url=url))
-                    response = requests.get(url)
+                    print('  Fetching "{name}" {url}'.format(name=name, url=full_browse_url))
+                    response = requests.get(full_browse_url)
                     if response.status_code == 200:
                         print('    Parsing the browse page for product page links')
                         link_partial_urls = re.findall('"product.seoUrl"\: \["([\w-]+)"\]', response.content.decode('utf-8'))
                         for partial_url in link_partial_urls:
-                            full_url = 'https://{website}/{region}/{partial_url}'.format(website=website, region=region, partial_url=partial_url)
-                            product_pages[full_url].append(browse_page)
-                    time.sleep(0.5)
+                            product_pages[partial_url].append((name, partial_browse_url))
+                    # time.sleep(0.5)
                 print('')
                 print('  Writing data to {}'.format(output_file_path))
                 with open(output_file_path, 'w') as f:
@@ -109,9 +108,10 @@ class Breadcrumbs(object):
                 if category['name'] not in self.banned_category_names:
                     for entry in category['refinements']:
                         name = entry['properties']['name']
-                        browse_url = '{url}{nav_state}&view=all'.format(url=url, nav_state=entry['navigationState'])
+                        browse_url = '{}{}&view=all'.format(url, entry['navigationState'])
+                        breadcrumb_url = '/{}/{}{}'.format(region, product_range, entry['navigationState'])
                         if name not in self.banned_entry_names:
-                            browse_pages.append((name, browse_url))
+                            browse_pages.append((name, browse_url, breadcrumb_url))
             print('    Found {} browse pages'.format(len(browse_pages)))
             return browse_pages
         return []

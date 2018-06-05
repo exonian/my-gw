@@ -37,7 +37,8 @@ $(function() {
 });
 
 $(function() {
-    var page_breadcrumbs = breadcrumbs[window.location.href];
+    var partial_url = window.location.href.split(/\/\w{2}-\w{2}\//)[1];
+    var page_breadcrumbs = breadcrumbs[partial_url];
     if (page_breadcrumbs != undefined) {
         var $main = $("#main");
         var $nav = $('<div style="text-align: center; padding-top: 15px;"></div>')
