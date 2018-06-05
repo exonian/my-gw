@@ -11,10 +11,53 @@ from bs4 import BeautifulSoup
 class Breadcrumbs(object):
     output_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src')
     product_ranges = {
-        'www.games-workshop.com': ['Warhammer', 'Warhammer-40-000', 'The-Hobbit', 'Black-Library', 'Painting-Modelling', 'Boxed-Games'],
-        'www.forgeworld.co.uk': ['Warhammer-40-000', 'The-Horus-Heresy', 'Warhammer-Age-of-Sigmar', 'The-Hobbit-Trilogy', 'More-Games', 'Modelling'],
+        'www.games-workshop.com': [
+            'Warhammer',
+            'Warhammer-40-000',
+            'The-Hobbit',
+            'Black-Library',
+            'Painting-Modelling',
+            'Boxed-Games',
+        ],
+        'www.forgeworld.co.uk': [
+            'Warhammer-40-000',
+            'The-Horus-Heresy',
+            'Warhammer-Age-of-Sigmar',
+            'The-Hobbit-Trilogy',
+            'More-Games',
+            'Modelling',
+        ],
     }
-    regions = ['en-GB']
+    regions = [
+        # 'en-AU',
+        # 'en-BE',
+        # 'en-CA',
+        # 'en-DK',
+        # 'en-DE',
+        # 'en-ES',
+        # 'en-FI',
+        # 'en-FR',
+        # 'en-IE',
+        # 'en-IT',
+        # 'en-JP',
+        # 'en-NL',
+        # 'en-NZ',
+        # 'en-NO',
+        # 'en-PL',
+        # 'en-EU',
+        # 'en-WW',
+        # 'en-SE',
+        'en-GB',
+        # 'en-US',
+        # 'en-AT',
+        # 'fr-BE',
+        # 'fr-CA',
+        # 'de-DE',
+        # 'es-ES',
+        # 'fr-FR',
+        # 'it-IT',
+        # 'de-AT',
+    ]
     banned_category_names = ['New & Exclusive', "What's New", 'Language']
     banned_entry_names = ['Last Chance to Buy', 'Bestsellers']
 
