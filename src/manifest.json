@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "My Games Workshop Webstore",
-  "description": "Remembers your browsing preferences for the GW and FW sites, to make up for their UX",
-  "version": "0.7.0",
+  "description": "Improves the UX of the Games Workshop and Forgeworld stores, mostly via improved nav",
+  "version": "0.7.1",
 
   "icons": {
     "16": "icon/icon16.png",
