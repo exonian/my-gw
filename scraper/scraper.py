@@ -71,6 +71,7 @@ class Breadcrumbs(object):
                             browse_pages.append((name, browse_url))
             print('    Found {} browse pages'.format(len(browse_pages)))
             return browse_pages
+        return []
 
 
 if __name__ == '__main__':
