@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "My Games Workshop Webstore",
-  "description": "Improves the UX of the Games Workshop and Forgeworld stores, mostly via improved nav",
-  "version": "0.7.2",
+  "description": "Remembers your browsing preferences for the GW and FW sites, to make up for their UX",
+  "version": "0.7.0",
 
   "icons": {
     "16": "icon/icon16.png",
@@ -19,38 +19,6 @@
     {
       "matches": ["*://*.forgeworld.co.uk/*", "*://*.games-workshop.com/*"],
       "js": ["jquery-3.2.1.min.js", "contentscript.js"]
-    },
-    {
-      "matches": ["*://*.forgeworld.co.uk/en-AU/*"],
-      "js": ["www.forgeworld.co.uk-en-AU-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.games-workshop.com/en-AU/*"],
-      "js": ["www.games-workshop.com-en-AU-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.forgeworld.co.uk/en-GB/*"],
-      "js": ["www.forgeworld.co.uk-en-GB-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.games-workshop.com/en-GB/*"],
-      "js": ["www.games-workshop.com-en-GB-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.forgeworld.co.uk/en-JP/*"],
-      "js": ["www.forgeworld.co.uk-en-JP-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.games-workshop.com/en-JP/*"],
-      "js": ["www.games-workshop.com-en-JP-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.forgeworld.co.uk/en-US/*"],
-      "js": ["www.forgeworld.co.uk-en-US-breadcrumbs.json"]
-    },
-    {
-      "matches": ["*://*.games-workshop.com/en-US/*"],
-      "js": ["www.games-workshop.com-en-US-breadcrumbs.json"]
     }
   ],
 
