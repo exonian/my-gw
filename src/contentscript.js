@@ -12,7 +12,13 @@ $("body").on("click", "a[href*='" + locale_link_identifier + "']", function(e) {
         }
     });
     e.preventDefault();
-    chrome.runtime.sendMessage({gwLang: language_code}, function() {location.reload()});
+    var gw = window.location.host.includes('games-workshop');
+    if (gw) {
+        chrome.runtime.sendMessage({gwLang: language_code}, function() {location.reload()});
+    }
+    else {
+        chrome.runtime.sendMessage({fwLang: language_code}, function() {location.reload()});
+    }
 });
 
 $("body").on("click", "a[href*='product.endDate'].read-more, a[href*='searchResults'].read-more", function(e) {

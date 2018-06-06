@@ -1,15 +1,16 @@
 var any_language_fw_regex = /forgeworld.co.uk\/\w{2}-\w{2}/;
 var any_language_gw_regex = /games-workshop.com\/\w{2}-\w{2}/;
 var view_all_query_string = "&view=all";
-var my_language_code, my_language_fw_string, my_language_fw_regex, my_language_gw_string, my_language_gw_regex;
+var my_language_fw_code, my_language_gw_code, my_language_fw_string, my_language_fw_regex, my_language_gw_string, my_language_gw_regex;
 var view_all;
 
 function getPreferences() {
     chrome.storage.local.get(function(obj) {
-        my_language_code = obj['gwLang'] || 'en-GB';
-        my_language_fw_string = 'forgeworld.co.uk/' + my_language_code;
+        my_language_fw_code = obj['fwLang'] || 'en-GB';
+        my_language_gw_code = obj['gwLang'] || 'en-GB';
+        my_language_fw_string = 'forgeworld.co.uk/' + my_language_fw_code;
         my_language_fw_regex = new RegExp(my_language_fw_string);
-        my_language_gw_string = 'games-workshop.com/' + my_language_code;
+        my_language_gw_string = 'games-workshop.com/' + my_language_gw_code;
         my_language_gw_regex = new RegExp(my_language_gw_string);
         view_all = obj['gwViewAll'] || false;
     });
