@@ -14,10 +14,14 @@ $("body").on("click", "a[href*='" + locale_link_identifier + "']", function(e) {
     e.preventDefault();
     var gw = window.location.host.includes('games-workshop');
     if (gw) {
-        chrome.runtime.sendMessage({gwLang: language_code}, function() {location.reload()});
+        chrome.runtime.sendMessage({gwLang: language_code}, function() {
+            if (window.location.pathname.includes('-')) {location.reload()} else {location.replace('en-GB')}
+        });
     }
     else {
-        chrome.runtime.sendMessage({fwLang: language_code}, function() {location.reload()});
+        chrome.runtime.sendMessage({fwLang: language_code}, function() {
+            if (window.location.pathname.includes('-')) {location.reload()} else {location.replace('en-GB')}
+        });
     }
 });
 
