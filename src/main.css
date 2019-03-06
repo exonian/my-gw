@@ -1,0 +1,7 @@
+.soldOut::before {
+    transition: opacity 1s;
+}
+
+.soldOut.hiding::before {
+    opacity: 0;
+}

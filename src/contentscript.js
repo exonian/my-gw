@@ -45,3 +45,9 @@ $(function() {
         };
     });
 });
+
+$(".product-viewer").on("click", ".soldOut", function(e) {
+    $this = $(this);
+    $this.addClass("hiding");
+    setTimeout(function(){$this.removeClass("soldOut hiding")}, 1000);
+});
